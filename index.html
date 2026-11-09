@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PulseDevv | Sistemas, Programação e Engenharia de Software</title>
+<meta name="description" content="PulseDevv desenvolve sistemas sob medida, sites, aplicativos e soluções de engenharia de software para empresas.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='black'/><path d='M3 17h7l3-8 5 14 3-6h8' stroke='%23b4ff39' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+  /* Cor de destaque única: troque --accent quando a logo chegar */
+  :root{--bg:#000;--bg2:#070707;--card:#0d0d0d;--text:#f5f5f5;--muted:#8a8a8a;--line:#1c1c1c;--accent:#b4ff39}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,.logo{font-family:"Space Grotesk",sans-serif;letter-spacing:-.02em}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  ::selection{background:var(--accent);color:#000}
+
+  /* NAV */
+  header{position:fixed;inset:0 0 auto;z-index:20;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+  header.scrolled{background:rgba(0,0,0,.8);backdrop-filter:blur(12px);border-color:var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.35rem}
+  .logo svg{width:30px;height:30px}
+  .links{display:flex;gap:36px;font-size:.92rem;color:var(--muted)}
+  .links a{position:relative}
+  .links a:hover{color:var(--text)}
+  .links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--accent);transition:width .3s}
+  .links a:hover::after{width:100%}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;font-weight:500;font-size:.95rem;background:var(--accent);color:#000;transition:transform .2s,box-shadow .2s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 40px -10px var(--accent)}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid #333}
+  .btn.ghost:hover{border-color:var(--text);box-shadow:none}
+
+  /* HERO */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 70%)}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:28px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--accent);animation:ping 1.6s infinite}
+  @keyframes ping{70%{box-shadow:0 0 0 10px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  h1{font-size:clamp(2.8rem,6.5vw,5.4rem);line-height:1;font-weight:700;margin-bottom:28px}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lead{color:var(--muted);font-size:1.15rem;max-width:520px;margin-bottom:40px}
+  .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .pulse-line{position:absolute;left:0;right:0;bottom:12%;height:80px;opacity:.5;pointer-events:none}
+  .pulse-line path{stroke:var(--accent);stroke-width:1.5;fill:none;stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 4s linear infinite}
+  @keyframes draw{to{stroke-dashoffset:-1600}}
+
+  /* code window */
+  .code{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;font-family:"JetBrains Mono",monospace;font-size:.85rem;box-shadow:0 30px 80px -30px rgba(180,255,57,.15)}
+  .code-top{display:flex;gap:7px;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .code-top i{width:11px;height:11px;border-radius:50%;background:#2a2a2a}
+  .code-top span{margin-left:auto;color:var(--muted);font-size:.75rem}
+  .code pre{padding:22px;color:#cfcfcf;white-space:pre-wrap;min-height:260px}
+  .k{color:var(--accent)}.s{color:#9ecbff}.c{color:#555}
+  .caret{display:inline-block;width:8px;height:1.1em;background:var(--accent);vertical-align:text-bottom;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* MARQUEE */
+  .marquee{border-block:1px solid var(--line);padding:22px 0;overflow:hidden;white-space:nowrap}
+  .track{display:inline-flex;gap:56px;animation:scroll 30s linear infinite;font-family:"Space Grotesk";font-size:1.4rem;color:#444}
+  .track span::after{content:"✦";margin-left:56px;color:var(--accent)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* SECTIONS */
+  section{padding:120px 0}
+  .head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:60px;flex-wrap:wrap}
+  .label{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;display:block}
+  h2{font-size:clamp(2.2rem,4.5vw,3.6rem);line-height:1.05;font-weight:700;max-width:640px}
+  .head p{color:var(--muted);max-width:380px}
+
+  /* services list */
+  .svc{border-top:1px solid var(--line)}
+  .svc-item{display:grid;grid-template-columns:90px 1fr 1fr 40px;gap:24px;align-items:center;padding:36px 0;border-bottom:1px solid var(--line);transition:padding .3s}
+  .svc-item:hover{padding-left:16px}
+  .svc-item .n{font-family:"JetBrains Mono";color:var(--muted)}
+  .svc-item h3{font-size:clamp(1.4rem,2.6vw,2rem);font-weight:500;transition:color .3s}
+  .svc-item:hover h3{color:var(--accent)}
+  .svc-item p{color:var(--muted)}
+  .svc-item .arrow{font-size:1.4rem;color:#444;transition:transform .3s,color .3s}
+  .svc-item:hover .arrow{transform:rotate(-45deg);color:var(--accent)}
+
+  /* process */
+  .alt{background:var(--bg2);border-block:1px solid var(--line)}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+  .step{background:var(--bg2);padding:40px 30px;transition:background .3s}
+  .step:hover{background:var(--card)}
+  .step b{font-family:"JetBrains Mono";font-weight:400;color:var(--accent);font-size:.85rem}
+  .step h3{font-size:1.35rem;font-weight:500;margin:50px 0 10px}
+  .step p{color:var(--muted);font-size:.95rem}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .stat{border:1px solid var(--line);border-radius:20px;padding:34px 28px}
+  .stat strong{display:block;font-family:"Space Grotesk";font-size:3rem;font-weight:700;line-height:1;margin-bottom:10px}
+  .stat strong i{font-style:normal;color:var(--accent)}
+  .stat span{color:var(--muted);font-size:.95rem}
+
+  /* contact */
+  .contact{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+  .contact h2{font-size:clamp(2.6rem,5.5vw,4.6rem)}
+  .contact .info{color:var(--muted);margin:24px 0 36px;max-width:420px}
+  .contact .info a{color:var(--text);border-bottom:1px solid var(--accent)}
+  form{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:32px;display:grid;gap:16px}
+  label{font-size:.85rem;color:var(--muted);display:grid;gap:8px}
+  input,select,textarea{font:inherit;color:var(--text);background:#000;border:1px solid #262626;border-radius:12px;padding:14px 16px;outline:none;transition:border-color .2s}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+  textarea{min-height:120px;resize:vertical}
+  form .btn{justify-content:center;border:0;cursor:pointer}
+
+  footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-size:.9rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+  .wa{position:fixed;right:22px;bottom:22px;z-index:30;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .2s}
+  .wa:hover{transform:scale(1.08)}
+  .wa svg{width:30px;height:30px;fill:#fff}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:900px){
+    .links{display:none}
+    .hero-grid,.contact{grid-template-columns:1fr}
+    .steps,.stats{grid-template-columns:1fr 1fr}
+    .svc-item{grid-template-columns:50px 1fr 30px}
+    .svc-item p{grid-column:2/3}
+    section{padding:80px 0}
+  }
+  @media (max-width:520px){.steps,.stats{grid-template-columns:1fr}nav .btn{display:none}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <nav class="wrap">
+    <a href="#" class="logo" aria-label="PulseDevv início">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#111" stroke="#222"/><path d="M3 17h7l3-8 5 14 3-6h8" stroke="#b4ff39" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      PulseDevv
+    </a>
+    <div class="links">
+      <a href="#servicos">Serviços</a>
+      <a href="#processo">Processo</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <a href="#contato" class="btn">Iniciar projeto →</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <svg class="pulse-line" viewBox="0 0 1600 80" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 40H500l20-30 25 60 20-45 15 15H900l20-30 25 60 20-45 15 15H1600"/>
+    </svg>
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span>Engenharia de software</span>
+        <h1>Software que mantém seu negócio <em>pulsando.</em></h1>
+        <p class="lead">Sistemas sob medida, sites e aplicativos construídos com engenharia de verdade — rápidos, seguros e feitos para crescer junto com a sua empresa.</p>
+        <div class="cta">
+          <a href="#contato" class="btn">Solicitar orçamento →</a>
+          <a href="#servicos" class="btn ghost">Conhecer serviços</a>
+        </div>
+      </div>
+      <div class="code reveal" aria-hidden="true">
+        <div class="code-top"><i></i><i></i><i></i><span>pulsedevv.ts</span></div>
+        <pre id="typed"></pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>Sistemas sob medida</span><span>Web</span><span>Mobile</span><span>APIs</span><span>Cloud</span><span>Automação</span><span>Integrações</span><span>Banco de dados</span>
+      <span>Sistemas sob medida</span><span>Web</span><span>Mobile</span><span>APIs</span><span>Cloud</span><span>Automação</span><span>Integrações</span><span>Banco de dados</span>
+    </div>
+  </div>
+
+  <section id="servicos">
+    <div class="wrap">
+      <div class="head reveal">
+        <div><span class="label">// Serviços</span><h2>O que construímos para você</h2></div>
+        <p>Do planejamento à entrega e suporte, cuidamos de toda a parte técnica do seu projeto.</p>
+      </div>
+      <div class="svc">
+        <a href="#contato" class="svc-item reveal"><span class="n">01</span><h3>Sistemas sob medida</h3><p>ERPs, sistemas de gestão, PDV e automações desenhados para o seu processo.</p><span class="arrow">→</span></a>
+        <a href="#contato" class="svc-item reveal"><span class="n">02</span><h3>Sites e plataformas web</h3><p>Sites institucionais, lojas virtuais e sistemas web rápidos e responsivos.</p><span class="arrow">→</span></a>
+        <a href="#contato" class="svc-item reveal"><span class="n">03</span><h3>Aplicativos mobile</h3><p>Apps Android e iOS integrados aos seus sistemas e dados.</p><span class="arrow">→</span></a>
+        <a href="#contato" class="svc-item reveal"><span class="n">04</span><h3>Engenharia de software</h3><p>Arquitetura, APIs, integrações, banco de dados e consultoria técnica.</p><span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="processo" class="alt">
+    <div class="wrap">
+      <div class="head reveal">
+        <div><span class="label">// Processo</span><h2>Simples, transparente e ágil</h2></div>
+        <p>Você acompanha cada etapa e valida o progresso com entregas contínuas.</p>
+      </div>
+      <div class="steps reveal">
+        <div class="step"><b>01 / Descoberta</b><h3>Entendimento</h3><p>Mergulhamos no seu negócio e levantamos os requisitos.</p></div>
+        <div class="step"><b>02 / Plano</b><h3>Arquitetura</h3><p>Definimos escopo, tecnologia, prazos e investimento.</p></div>
+        <div class="step"><b>03 / Build</b><h3>Desenvolvimento</h3><p>Sprints curtas com entregas que você testa de verdade.</p></div>
+        <div class="step"><b>04 / Launch</b><h3>Entrega e suporte</h3><p>Publicação, treinamento e acompanhamento contínuo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="wrap">
+      <div class="head reveal">
+        <div><span class="label">// Sobre</span><h2>Tecnologia com pulso firme</h2></div>
+        <p>A PulseDevv une boas práticas de engenharia com atenção real a cada cliente. Código limpo, comunicação direta e foco em resultado.</p>
+      </div>
+      <div class="stats">
+        <div class="stat reveal"><strong>100<i>%</i></strong><span>Projetos sob medida</span></div>
+        <div class="stat reveal"><strong>3<i>+</i></strong><span>Plataformas: web, mobile e desktop</span></div>
+        <div class="stat reveal"><strong>24<i>h</i></strong><span>Para responder seu contato</span></div>
+        <div class="stat reveal"><strong>0<i>→</i>1</strong><span>Da ideia ao produto no ar</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="alt">
+    <div class="wrap contact">
+      <div class="reveal">
+        <span class="label">// Contato</span>
+        <h2>Vamos tirar seu projeto do papel?</h2>
+        <p class="info">Conte um pouco sobre o que você precisa e retornamos com um orçamento sem compromisso. Prefere e-mail? <a href="mailto:contato@pulsedevv.com">contato@pulsedevv.com</a></p>
+      </div>
+      <form id="form" class="reveal">
+        <label>Nome<input name="nome" required autocomplete="name"></label>
+        <label>Tipo de projeto
+          <select name="tipo">
+            <option>Sistema sob medida</option><option>Site / plataforma web</option><option>Aplicativo</option><option>Consultoria / outro</option>
+          </select>
+        </label>
+        <label>Mensagem<textarea name="msg" required placeholder="Descreva rapidamente sua ideia..."></textarea></label>
+        <button class="btn" type="submit">Enviar pelo WhatsApp →</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© <span id="ano">2026</span> PulseDevv. Todos os direitos reservados.</span><span>Sistemas · Programação · Engenharia de Software</span></div>
+</footer>
+
+<a class="wa" id="wa" href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+</a>
+
+<script>
+  const WHATSAPP = '5500000000000'; // TROQUE: 55 + DDD + número
+  const wa = t => 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(t);
+
+  document.getElementById('ano').textContent = new Date().getFullYear();
+  document.getElementById('wa').href = wa('Olá, PulseDevv! Gostaria de um orçamento.');
+
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target;
+    window.open(wa(`Olá, PulseDevv! Sou ${f.nome.value}.\nProjeto: ${f.tipo.value}\n\n${f.msg.value}`), '_blank');
+  });
+
+  const header = document.getElementById('top');
+  addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 20));
+
+  const io = new IntersectionObserver(es => es.forEach(x => x.isIntersecting && (x.target.classList.add('in'), io.unobserve(x.target))), {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Efeito de digitação na janela de código
+  const code = `<span class="c">// seu negócio, em código</span>
+<span class="k">const</span> projeto = <span class="k">await</span> pulse.build({
+  cliente: <span class="s">"Sua Empresa"</span>,
+  tipo: [<span class="s">"web"</span>, <span class="s">"mobile"</span>, <span class="s">"sistema"</span>],
+  qualidade: <span class="s">"engenharia de verdade"</span>,
+});
+
+projeto.deploy(); <span class="c">// 🚀 no ar</span>`;
+  const el = document.getElementById('typed');
+  let i = 0;
+  (function type(){
+    if (i > code.length) { el.innerHTML = code + '<span class="caret"></span>'; return; }
+    if (code[i] === '<') i = code.indexOf('>', i) + 1; else i++;
+    el.innerHTML = code.slice(0, i) + '<span class="caret"></span>';
+    setTimeout(type, 28);
+  })();
+</script>
+</body>
+</html>
